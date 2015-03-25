@@ -1,0 +1,1 @@
+# SimpleJsonApi::Rails
