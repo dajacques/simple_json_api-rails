@@ -17,7 +17,6 @@ class RendererTestController < ActionController::Base
 end
 
 describe RendererTestController do
-  let(:animal_jsonapi) { }
   before do
     Rails.application.routes.append do
       get 'render_without_serializer' => 'test#render_without_serializer'
