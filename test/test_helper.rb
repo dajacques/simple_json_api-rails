@@ -27,3 +27,6 @@ class MiniTest::Spec
 end
 
 require 'simple_json_api/rails'
+
+TEST_OBJECT = Animal.first
+TEST_SERIALIZER = AnimalSerializer
