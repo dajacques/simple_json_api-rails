@@ -23,6 +23,17 @@ describe ControllerMethodsTestController do
     Rails.application.routes_reloader.reload!
   end
 
+  describe 'with no HTTP_ACCEPT header' do
+    before do
+      @request.headers.instance_exec { @env.delete('HTTP_ACCEPT') }
+    end
+
+    it 'returns Not Acceptable' do
+      get :simple_render
+      must_respond_with 406
+    end
+  end
+
   describe 'with no Accept header' do
     before do
       @request.headers.instance_exec { @env.delete('Accept') }
@@ -56,14 +67,14 @@ describe ControllerMethodsTestController do
     end
   end
 
-  # describe 'with extentions' do
-  #   before do
-  #     @request.headers['Accept'] = "#{jsonapi_mime_type};ext=supportme"
-  #   end
-  #
-  #   it 'returns Not Acceptable' do
-  #     get :simple_render
-  #     must_respond_with 406
-  #   end
-  # end
+  describe 'with extentions' do
+    before do
+      @request.headers['Accept'] = "#{jsonapi_mime_type};q=0.8;ext=supportme"
+    end
+
+    it 'returns Not Acceptable' do
+      get :simple_render
+      must_respond_with 406
+    end
+  end
 end
