@@ -1,0 +1,14 @@
+class <%= @serializer_name -%> < SimpleJsonApi::ResourceSerializer
+  serializes :<%= class_name.underscore.gsub('/', '__').pluralize %>, model: <%= "::#{@model}" -%>, primary_key: :<%= @model.constantize.primary_key %>
+
+  <%- @model.constantize.column_names.each do |col| -%>
+  attribute :<%= col %>
+  <%- end -%>
+
+  <%- @model.constantize.reflect_on_all_associations.each do |assoc| -%>
+    <%- klass_name = assoc.options[:class_name] -%>
+    <%- serializer = [@namespace, klass_name].compact.join('::') + 'Serializer' if klass_name -%>
+  <%= assoc.macro %> :<%= assoc.name %><%= ', polymorphic: true' if assoc.options[:polymorphic] %><%= ', serializer: ' + serializer if serializer %>
+  <%- end -%>
+end
+
