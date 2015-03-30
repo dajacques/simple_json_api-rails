@@ -17,4 +17,13 @@ class ActiveSupport::TestCase
   fixtures :all
 end
 
+require 'database_cleaner'
+DatabaseCleaner.clean_with :truncation
+DatabaseCleaner.strategy = :transaction
+
+class MiniTest::Spec
+  before { DatabaseCleaner.start }
+  after { DatabaseCleaner.clean }
+end
+
 require 'simple_json_api/rails'
