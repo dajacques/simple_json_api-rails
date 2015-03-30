@@ -6,12 +6,12 @@ class RendererTestController < ActionController::Base
   end
 
   def render_without_serializer
-    render jsonapi: TEST_OBJECT
+    render jsonapi: test_object
   end
 
   def render_with_respond_to
     respond_to do |format|
-      format.jsonapi { render jsonapi: TEST_OBJECT, serializer: TEST_SERIALIZER }
+      format.jsonapi { render jsonapi: test_object, serializer: test_serializer }
     end
   end
 end

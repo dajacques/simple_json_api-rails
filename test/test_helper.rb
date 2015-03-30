@@ -28,5 +28,10 @@ end
 
 require 'simple_json_api/rails'
 
-TEST_OBJECT = Animal.first
-TEST_SERIALIZER = AnimalSerializer
+def test_object
+  Animal.first
+end
+
+def test_serializer
+  AnimalSerializer
+end

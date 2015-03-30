@@ -8,7 +8,7 @@ class ControllerMethodsTestController < ActionController::Base
   end
 
   def simple_render
-    render jsonapi: TEST_OBJECT, serializer: TEST_SERIALIZER
+    render jsonapi: test_object, serializer: test_serializer
   end
 end
 
@@ -55,4 +55,15 @@ describe ControllerMethodsTestController do
       must_respond_with 200
     end
   end
+
+  # describe 'with extentions' do
+  #   before do
+  #     @request.headers['Accept'] = "#{jsonapi_mime_type};ext=supportme"
+  #   end
+  #
+  #   it 'returns Not Acceptable' do
+  #     get :simple_render
+  #     must_respond_with 406
+  #   end
+  # end
 end
