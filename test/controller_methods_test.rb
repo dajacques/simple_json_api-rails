@@ -15,6 +15,7 @@ end
 describe ControllerMethodsTestController do
   let(:jsonapi_mime_type) { 'application/vnd.api+json' }
   let(:json_mime_type) { 'application/json' }
+  let(:unsupported_mime_type) { 'text/html' }
 
   before do
     Rails.application.routes.append do
@@ -64,6 +65,17 @@ describe ControllerMethodsTestController do
     it 'returns OK' do
       get :simple_render
       must_respond_with 200
+    end
+
+    describe 'with unsupported Content-Type header' do
+      before do
+        @request.headers['Content-Type'] = unsupported_mime_type
+      end
+
+      it 'returns Unsupported Media Type' do
+        get :simple_render
+        must_respond_with 415
+      end
     end
   end
 
