@@ -24,20 +24,9 @@ describe ControllerMethodsTestController do
     Rails.application.routes_reloader.reload!
   end
 
-  describe 'with no HTTP_ACCEPT header' do
+  describe 'with no HTTP_ACCEPT/Accept header' do
     before do
       @request.headers.instance_exec { @env.delete('HTTP_ACCEPT') }
-    end
-
-    it 'returns Not Acceptable' do
-      get :simple_render
-      must_respond_with 406
-    end
-  end
-
-  describe 'with no Accept header' do
-    before do
-      @request.headers.instance_exec { @env.delete('Accept') }
     end
 
     it 'returns Not Acceptable' do
