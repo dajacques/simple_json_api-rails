@@ -14,6 +14,21 @@ module SimpleJsonApi
             include: options[:include]
           )
         end
+
+        ActionController::Renderers.add :jsonapi_error do |object, options|
+          object = SimpleJsonApi::Rails::BaseError.new(object.to_s) unless
+            object.is_a? SimpleJsonApi::Rails::BaseError
+          self.content_type ||= Mime::Type.lookup('application/vnd.api+json')
+          self.status = object.status
+          {
+            errors: [
+              {
+                status: object.status.to_s,
+                detail: object.message
+              }
+            ]
+          }.to_json
+        end
       end
     end
   end

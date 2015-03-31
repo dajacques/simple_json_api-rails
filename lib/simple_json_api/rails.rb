@@ -7,6 +7,5 @@ module SimpleJsonApi
   end
 end
 
-require 'simple_json_api/rails/controller_methods'
-
+require 'simple_json_api/rails/errors'
 require 'simple_json_api/rails/railtie' if defined?(Rails)

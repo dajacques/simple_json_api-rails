@@ -1,5 +1,7 @@
 require 'test_helper'
 
+require 'simple_json_api/rails/controller_methods'
+
 class ControllerMethodsTestController < ActionController::Base
   include SimpleJsonApi::Rails::ControllerMethods
 
@@ -10,18 +12,24 @@ class ControllerMethodsTestController < ActionController::Base
   def simple_render
     render jsonapi: test_object, serializer: test_serializer
   end
+
+  def not_found
+    fail SimpleJsonApi::Rails::NotFoundError, 'test not_found error'
+  end
 end
 
 describe ControllerMethodsTestController do
   let(:jsonapi_mime_type) { 'application/vnd.api+json' }
-  let(:json_mime_type) { 'application/json' }
   let(:unsupported_mime_type) { 'text/html' }
 
   before do
     Rails.application.routes.append do
       get 'simple_render' => 'test#simple_render'
+      get 'not_found' => 'test#not_found'
     end
     Rails.application.routes_reloader.reload!
+
+    @request.headers['Accept'] = jsonapi_mime_type
   end
 
   describe 'with no HTTP_ACCEPT/Accept header' do
@@ -37,7 +45,7 @@ describe ControllerMethodsTestController do
 
   describe 'without JSON API mime type in Accept header' do
     before do
-      @request.headers['Accept'] = json_mime_type
+      @request.headers['Accept'] = unsupported_mime_type
     end
 
     it 'returns Not Acceptable' do
@@ -76,6 +84,13 @@ describe ControllerMethodsTestController do
     it 'returns Not Acceptable' do
       get :simple_render
       must_respond_with 406
+    end
+  end
+
+  describe 'on error' do
+    it 'catches the base error' do
+      get :not_found
+      must_respond_with 404
     end
   end
 end
