@@ -11,5 +11,17 @@ module SimpleJsonApi
         404
       end
     end
+
+    class NotAcceptableError < BaseError
+      def status
+        406
+      end
+    end
+
+    class UnsupportedMediaTypeError < BaseError
+      def status
+        415
+      end
+    end
   end
 end

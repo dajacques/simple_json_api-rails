@@ -16,9 +16,12 @@ module SimpleJsonApi
       private
 
       def simple_json_api_rails_validate_mime_type_headers
-        head 406 unless request.accepts.include? JSON_API_MIME_TYPE
-        head 406 if request.headers['HTTP_ACCEPT'].try(:match, JSON_API_EXT_REGEX)
-        head 415 if request.content_type.try(:!=, JSON_API_MIME_TYPE)
+        fail(NotAcceptableError, "Accept header should include '#{JSON_API_MIME_TYPE}'") unless
+          request.accepts.include? JSON_API_MIME_TYPE
+        fail(NotAcceptableError, 'Accept header included unsupported extensions') if
+          request.headers['HTTP_ACCEPT'].try(:match, JSON_API_EXT_REGEX)
+        fail(UnsupportedMediaTypeError, 'Unsupported Content-Type') if
+          request.content_type.try(:!=, JSON_API_MIME_TYPE)
       end
 
       def simple_json_api_rails_handle_base_error(error)
