@@ -1,0 +1,26 @@
+class <%= @controller_name -%> < <%= @base_controller %>
+  include SimpleJsonApi::Helper
+
+  def index
+    @<%= class_name.underscore.gsub('/', '__').pluralize %> = <%= @model -%>.paginate(page: params[:page], per_page: params[:per_page]).to_a
+    render jsonapi: @<%= class_name.underscore.gsub('/', '__').pluralize %>, serializer: <%= @serializer_name %>,
+                      fields: options_hash.fetch(:fields, nil),
+                      include: options_hash.fetch(:include, nil)
+  end
+
+  def show
+    @<%= class_name.underscore.gsub('/', '__') %> = <%= @model -%>.find(params[:id])
+    render jsonapi: @<%= class_name.underscore.gsub('/', '__') %>, serializer: <%= @serializer_name %>,
+                      fields: options_hash.fetch(:fields, nil),
+                      include: options_hash.fetch(:include, nil)
+  end
+
+  private
+
+  def options_hash
+    {
+      fields: params[:fields],
+      include: params[:include]
+    }
+  end
+end
