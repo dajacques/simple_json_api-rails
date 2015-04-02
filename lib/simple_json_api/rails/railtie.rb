@@ -7,6 +7,7 @@ module SimpleJsonApi
         ActionController::Renderers.add :jsonapi do |object, options|
           fail ArgumentError, 'Missing serializer option' unless options.key? :serializer
           self.content_type ||= Mime::Type.lookup('application/vnd.api+json')
+          self.status = 200
           SimpleJsonApi.render(
             model: object,
             serializer: options[:serializer],
@@ -16,8 +17,8 @@ module SimpleJsonApi
         end
 
         ActionController::Renderers.add :jsonapi_error do |object, options|
-          object = SimpleJsonApi::Rails::BaseError.new(object.to_s) unless
-            object.is_a? SimpleJsonApi::Rails::BaseError
+          object = SimpleJsonApi::Rails::Error.new(object.to_s) unless
+            object.is_a? SimpleJsonApi::Rails::Error
           self.content_type ||= Mime::Type.lookup('application/vnd.api+json')
           self.status = object.status
           {

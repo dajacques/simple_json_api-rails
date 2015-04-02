@@ -1,4 +1,8 @@
+require 'simple_json_api/rails/controller_methods'
+
 class AnimalsController < ApplicationController
+  include SimpleJsonApi::Rails::ControllerMethods
+
   def index
     @animals = Animal.all
     render jsonapi: @animals, serializer: AnimalSerializer

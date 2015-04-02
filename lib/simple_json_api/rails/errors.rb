@@ -1,24 +1,24 @@
 module SimpleJsonApi
   module Rails
-    class BaseError < StandardError
+    class Error < StandardError
       def status
         500
       end
     end
 
-    class NotFoundError < BaseError
+    class NotFoundError < Error
       def status
         404
       end
     end
 
-    class NotAcceptableError < BaseError
+    class NotAcceptableError < Error
       def status
         406
       end
     end
 
-    class UnsupportedMediaTypeError < BaseError
+    class UnsupportedMediaTypeError < Error
       def status
         415
       end

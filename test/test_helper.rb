@@ -26,6 +26,12 @@ class MiniTest::Spec
   after { DatabaseCleaner.clean }
 end
 
+class ActionDispatch::TestResponse
+  def json_body
+    ActiveSupport::JSON.decode body
+  end
+end
+
 require 'simple_json_api/rails'
 
 def test_object
