@@ -10,7 +10,7 @@ module SimpleJsonApi
 
       included do
         before_action :_sjar_validate_mime_type_headers
-        rescue_from ActiveRecord::RecordNotFound, with: :_sjar_handle_record_not_found
+        # rescue_from ActiveRecord::RecordNotFound, with: :_sjar_handle_record_not_found
         rescue_from SimpleJsonApi::Rails::Error, with: :_sjar_handle_error
       end
 
@@ -25,9 +25,9 @@ module SimpleJsonApi
           request.content_type.try(:!=, JSON_API_MIME_TYPE)
       end
 
-      def _sjar_handle_record_not_found(error)
-        _sjar_render_exception SimpleJsonApi::Rails::NotFoundError.new(error.message)
-      end
+      # def _sjar_handle_record_not_found(error)
+      #   _sjar_render_exception SimpleJsonApi::Rails::NotFoundError.new(error.message)
+      # end
 
       def _sjar_handle_error(error)
         _sjar_render_exception error

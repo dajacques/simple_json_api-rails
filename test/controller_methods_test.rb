@@ -88,7 +88,7 @@ describe ControllerMethodsTestController do
   end
 
   describe 'on error' do
-    it 'catches the base error' do
+    it 'catches the error' do
       get :not_found
       must_respond_with 404
     end

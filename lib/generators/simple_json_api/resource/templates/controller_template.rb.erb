@@ -1,21 +1,30 @@
+<% instance = "@#{class_name.underscore.gsub('/', '__')}" -%>
+<% collection = instance.pluralize -%>
 class <%= @controller_name -%> < <%= @base_controller %>
   include SimpleJsonApi::Helper
 
   def index
-    @<%= class_name.underscore.gsub('/', '__').pluralize %> = <%= @model -%>.paginate(page: params[:page], per_page: params[:per_page]).to_a
-    render jsonapi: @<%= class_name.underscore.gsub('/', '__').pluralize %>, serializer: <%= @serializer_name %>,
+    <%= collection %> = <%= @model -%>.paginate(page: params[:page], per_page: params[:per_page]).to_a
+    render jsonapi: <%= collection %>, serializer: <%= @serializer_name %>,
                       fields: options_hash.fetch(:fields, nil),
                       include: options_hash.fetch(:include, nil)
   end
 
   def show
-    @<%= class_name.underscore.gsub('/', '__') %> = <%= @model -%>.find(params[:id])
-    render jsonapi: @<%= class_name.underscore.gsub('/', '__') %>, serializer: <%= @serializer_name %>,
+    <%= instance %> = <%= @model -%>.find_by(<%= @model %>.primary_key.to_sym => params[:id])
+    render jsonapi_error: not_found_error and return unless <%= instance %>
+    render jsonapi: <%= instance %>, serializer: <%= @serializer_name %>,
                       fields: options_hash.fetch(:fields, nil),
                       include: options_hash.fetch(:include, nil)
   end
 
   private
+
+  def not_found_error
+    SimpleJsonApi::Rails::NotFoundError.new(
+      "Couldn't find <%= @model %> with '#{<%= @model %>.primary_key}'=#{params[:id]}"
+    )
+  end
 
   def options_hash
     {
