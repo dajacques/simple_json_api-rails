@@ -19,5 +19,9 @@ else
 end
 
 gem 'sqlite3'
-gem 'database_cleaner'
 gem 'awesome_print'
+
+group :test do
+  gem 'simplecov'
+  gem 'database_cleaner'
+end
