@@ -14,6 +14,11 @@ ActiveRecord::Migrator.migrations_paths = [File.expand_path('../../test/dummy/db
 
 require 'rails/test_help'
 require 'minitest/rails'
+require 'minitest/reporters'
+Minitest::Reporters.use!(
+  # Minitest::Reporters::DefaultReporter.new(color: true)
+  Minitest::Reporters::SpecReporter.new
+)
 
 ActiveSupport::TestCase.fixture_path = File.expand_path("../fixtures", __FILE__)
 Minitest.backtrace_filter = Minitest::BacktraceFilter.new

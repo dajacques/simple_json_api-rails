@@ -19,7 +19,9 @@ else
 end
 
 gem 'sqlite3'
+gem 'minitest-reporters'
 gem 'awesome_print'
+
 
 group :test do
   gem 'simplecov'
