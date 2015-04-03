@@ -16,7 +16,7 @@ class RendererTestController < ActionController::Base
   end
 
   def render_from_exception
-    render jsonapi_error: SimpleJsonApi::Rails::BaseError.new('jsonapi_error renderer test')
+    render jsonapi_error: SimpleJsonApi::Rails::Error.new('jsonapi_error renderer test')
   end
 
   def render_from_string

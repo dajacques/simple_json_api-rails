@@ -9,13 +9,14 @@ module SimpleJsonApi
       JSON_API_EXT_REGEX = Regexp.new(Regexp.quote(JSON_API_MIME_TYPE) + ';[^,]*\s*ext=\w+')
 
       included do
-        before_action :simple_json_api_rails_validate_mime_type_headers
-        rescue_from SimpleJsonApi::Rails::BaseError, with: :simple_json_api_rails_handle_base_error
+        before_action :_sjar_validate_mime_type_headers
+        # rescue_from ActiveRecord::RecordNotFound, with: :_sjar_handle_record_not_found
+        rescue_from SimpleJsonApi::Rails::Error, with: :_sjar_handle_error
       end
 
       private
 
-      def simple_json_api_rails_validate_mime_type_headers
+      def _sjar_validate_mime_type_headers
         fail(NotAcceptableError, "Accept header should include '#{JSON_API_MIME_TYPE}'") unless
           request.accepts.include? JSON_API_MIME_TYPE
         fail(NotAcceptableError, 'Accept header included unsupported extensions') if
@@ -24,7 +25,15 @@ module SimpleJsonApi
           request.content_type.try(:!=, JSON_API_MIME_TYPE)
       end
 
-      def simple_json_api_rails_handle_base_error(error)
+      # def _sjar_handle_record_not_found(error)
+      #   _sjar_render_exception SimpleJsonApi::Rails::NotFoundError.new(error.message)
+      # end
+
+      def _sjar_handle_error(error)
+        _sjar_render_exception error
+      end
+
+      def _sjar_render_exception(error)
         render jsonapi_error: error
       end
     end
