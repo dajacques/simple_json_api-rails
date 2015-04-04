@@ -1,7 +1,11 @@
+require 'simple_json_api/rails/json_api_params_parser'
+
 module SimpleJsonApi
   module Rails
     class Railtie < ::Rails::Railtie
-      initializer 'simple_json_api' do
+      initializer 'simple_json_api' do |app|
+        app.middleware.insert_after ActionDispatch::ParamsParser, SimpleJsonApi::Rails::JsonApiParamsParser
+
         Mime::Type.register 'application/vnd.api+json', :jsonapi
 
         ActionController::Renderers.add :jsonapi do |object, options|
@@ -33,6 +37,7 @@ module SimpleJsonApi
             ]
           }.to_json
         end
+
       end
     end
   end
