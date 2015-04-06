@@ -34,25 +34,21 @@ class WebServiceTest < ActionDispatch::IntegrationTest
 
   def test_post_jsonapi
     with_test_route_set do
-      post "/", { entry: { summary: 'content...', attributed: true }}.to_json,
+      post "/", { data: { entries: { summary: 'content...' }}}.to_json,
            {'CONTENT_TYPE' => 'application/vnd.api+json' }
 
-      assert_equal 'entry', @controller.response.body
-      assert @controller.params.has_key?(:entry)
-      assert_equal 'content...', @controller.params["entry"]['summary']
-      assert @controller.params["entry"]['attributed']
+      assert @controller.params.has_key?(:data)
+      assert_equal 'content...', @controller.params['data']['entries']['summary']
     end
   end
 
   def test_put_jsonapi
     with_test_route_set do
-      put "/", { entry: { summary: 'content...', attributed: true }}.to_json,
+      put "/", { data: { entries: { summary: 'content...' }}}.to_json,
           {'CONTENT_TYPE' => 'application/vnd.api+json'}
 
-      assert_equal 'entry', @controller.response.body
-      assert @controller.params.has_key?(:entry)
-      assert_equal 'content...', @controller.params["entry"]['summary']
-      assert @controller.params["entry"]['attributed']
+      assert @controller.params.has_key?(:data)
+      assert_equal 'content...', @controller.params['data']['entries']['summary']
     end
   end
 

@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/ggordon/simple_json_api.git
+  revision: 25ac7455fd5f44ef02de2ce2d7d697a3ee1223a9
+  branch: master
+  specs:
+    simple_json_api (0.0.5)
+      activerecord (>= 4.0)
+      json-schema
+
 PATH
   remote: .
   specs:
@@ -35,6 +44,7 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    addressable (2.3.8)
     ansi (1.5.0)
     arel (5.0.1.20140414130214)
     awesome_print (1.6.1)
@@ -45,6 +55,8 @@ GEM
     hike (1.2.3)
     i18n (0.7.0)
     json (1.8.2)
+    json-schema (2.5.1)
+      addressable (~> 2.3.7)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     mime-types (2.4.3)
@@ -80,8 +92,6 @@ GEM
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
     ruby-progressbar (1.7.5)
-    simple_json_api (0.0.5)
-      activerecord (>= 4.0)
     simplecov (0.9.2)
       docile (~> 1.1.0)
       multi_json (~> 1.0)
@@ -112,6 +122,7 @@ DEPENDENCIES
   minitest-rails
   minitest-reporters
   rails (~> 4.1.0)
+  simple_json_api!
   simple_json_api-rails!
   simplecov
   sqlite3

@@ -21,7 +21,7 @@ end
 gem 'sqlite3'
 gem 'minitest-reporters'
 gem 'awesome_print'
-
+gem 'simple_json_api', git: 'https://github.com/ggordon/simple_json_api.git', branch: 'master'
 
 group :test do
   gem 'simplecov'

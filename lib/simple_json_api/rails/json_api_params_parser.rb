@@ -30,10 +30,7 @@ module SimpleJsonApi
 
         if mime_type == Mime::JSONAPI
           data = ActiveSupport::JSON.decode(request.raw_post)
-          logger(env).debug data
-
-          data = { :_json => data } unless data.is_a?(Hash)
-          # TODO: JSONAPI Validation????
+          data = { :_jsonapi => data } unless data.is_a?(Hash)
           ActionDispatch::Request::Utils.deep_munge(data).with_indifferent_access
         else
           false
