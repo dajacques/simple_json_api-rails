@@ -1,6 +1,9 @@
 <% instance = "@#{class_name.underscore.gsub('/', '__')}" -%>
 <% collection = instance.pluralize -%>
+require 'simple_json_api/rails/controller_methods'
+
 class <%= @controller_name -%> < <%= @base_controller %>
+  include SimpleJsonApi::Rails::ControllerMethods
   include SimpleJsonApi::Helper
 
   def index

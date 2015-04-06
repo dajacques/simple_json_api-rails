@@ -17,7 +17,7 @@ module SimpleJsonApi
       private
 
       def _sjar_validate_mime_type_headers
-        fail(NotAcceptableError, "Accept header should include '#{JSON_API_MIME_TYPE}'") unless
+        fail(NotAcceptableError, "Accept header must include '#{JSON_API_MIME_TYPE}'") unless
           request.accepts.include? JSON_API_MIME_TYPE
         fail(NotAcceptableError, 'Accept header included unsupported extensions') if
           request.headers['HTTP_ACCEPT'].try(:match, JSON_API_EXT_REGEX)
