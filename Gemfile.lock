@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ggordon/simple_json_api.git
-  revision: 25ac7455fd5f44ef02de2ce2d7d697a3ee1223a9
+  revision: 1347f1450ca789b29e4c6de60a5f09879f30b9a8
   branch: master
   specs:
     simple_json_api (0.0.5)
