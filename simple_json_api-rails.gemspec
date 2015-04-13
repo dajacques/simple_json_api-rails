@@ -16,5 +16,4 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'simple_json_api', '~> 0.0.4'
   s.add_dependency 'rails', '>= 4.1'
-  s.add_dependency 'responders'
 end
