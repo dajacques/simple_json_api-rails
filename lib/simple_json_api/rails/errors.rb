@@ -6,6 +6,12 @@ module SimpleJsonApi
       end
     end
 
+    class BadRequestError < Error
+      def status
+        400
+      end
+    end
+
     class NotFoundError < Error
       def status
         404
@@ -15,6 +21,12 @@ module SimpleJsonApi
     class NotAcceptableError < Error
       def status
         406
+      end
+    end
+
+    class ConflictError < Error
+      def status
+        409
       end
     end
 
