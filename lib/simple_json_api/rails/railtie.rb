@@ -16,7 +16,8 @@ module SimpleJsonApi
             model: object,
             serializer: options[:serializer],
             fields: options[:fields],
-            include: options[:include]
+            include: options[:include],
+            context: { base_url: request.base_url + request.script_name }
           )
         end
 
